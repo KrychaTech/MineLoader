@@ -1,0 +1,44 @@
+name: Build and Commit
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Nuitka
+        run: pip install nuitka
+
+      - name: Build Python script
+        run: python -m nuitka --onefile --standalone --output-dir=. minecraft_runner.py
+
+      - name: Rename executable
+        run: mv minecraft_runner.exe play_minecraft.exe
+
+      - name: Install Git LFS
+        run: |
+          sudo apt-get install git-lfs
+          git lfs install
+
+      - name: Add executable to Git LFS
+        run: git lfs track "play_minecraft.exe"
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Add built executable"
+          git push
