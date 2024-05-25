@@ -22,7 +22,7 @@ jobs:
         run: pip install nuitka
 
       - name: Build Python script
-        run: python -m nuitka --onefile --standalone --output-dir=. minecraft_runner.py
+        run: python -m nuitka --onefile --assume-yes-for-downloads --standalone --output-dir=. minecraft_runner.py
 
       - name: Rename executable
         run: mv minecraft_runner.exe play_minecraft.exe
