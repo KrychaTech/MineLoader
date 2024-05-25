@@ -22,14 +22,14 @@ jobs:
         run: pip install nuitka
 
       - name: Build Python script
-        run: python -m nuitka --onefile --standalone --output-dir=. minecraft_runner.py
+        run: python -m nuitka --onefile --windows-icon-from-ico=icon.ico --output-dir=. --windows-disable-console minecraft_runner.py
 
       - name: Rename executable
         run: mv minecraft_runner.exe play_minecraft.exe
 
       - name: Install Git LFS
         run: |
-          sudo apt-get install git-lfs
+          choco install git-lfs
           git lfs install
 
       - name: Add executable to Git LFS
