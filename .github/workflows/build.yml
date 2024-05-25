@@ -18,8 +18,8 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Install Nuitka
-        run: pip install nuitka
+      - name: Install Nuitka and PortableMC
+        run: pip install nuitka portablemc
 
       - name: Build Python script
         run: python -m nuitka --onefile --assume-yes-for-downloads --standalone --output-dir=. minecraft_runner.py
